@@ -19,5 +19,8 @@ jobs:
       uses: dcarbone/install-jq-action@v1.0.1
     
     - name: Run Script
+      env:
+        TRACKMANIA_API_USERNAME: ${{ secrets.TRACKMANIA_API_USERNAME }}
+        TRACKMANIA_API_PASSWORD: ${{ secrets.TRACKMANIA_API_PASSWORD }}
       run: |
         ./update.sh
