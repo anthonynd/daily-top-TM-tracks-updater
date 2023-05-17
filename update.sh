@@ -17,6 +17,11 @@ printf " > Authenticating to Trackmania API...\n"
 ticket_response=$(curl -sS -X POST -u "$TRACKMANIA_API_USERNAME:$TRACKMANIA_API_PASSWORD" -H "Content-Type: application/json" -H "Ubi-AppId: 86263886-327a-4328-ac69-527f0d20a237" -A "Daily top TM trackers updater / https://github.com/anthonynd/daily-top-TM-tracks-updater" -d '{"audience":"NadeoLiveServices"}' "https://public-ubiservices.ubi.com/v3/profiles/sessions")
 if [[ $? -eq 0 ]]; then
     ticket=$(echo "$ticket_response" | jq -r '.ticket')
+    if [ -z "$ticket" ]; then
+        printf "Failed to retrieve ticket\n"
+        printf "Ticket response: $ticket_response\n"
+        exit 1
+    fi
 else
     # Request failed
     printf "Request failed\n"
@@ -25,6 +30,11 @@ fi
 token_response=$(curl -sS -X POST -H "Content-Type: application/json" -H "Authorization: ubi_v1 t=$ticket" -d '{"audience":"NadeoLiveServices"}' "https://prod.trackmania.core.nadeo.online/v2/authentication/token/ubiservices")
 if [[ $? -eq 0 ]]; then
     token=$(echo "$token_response" | jq -r '.accessToken')
+    if [ -z "$token" ]; then
+        printf "Failed to retrieve token\n"
+        printf "Token response: $token_response\n"
+        exit 1
+    fi
 else
     # Request failed
     printf "Request failed\n"
