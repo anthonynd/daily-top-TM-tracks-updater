@@ -20,4 +20,4 @@ jobs:
     
     - name: Run Script
       run: |
-        sh update.sh
+        ./update.sh
