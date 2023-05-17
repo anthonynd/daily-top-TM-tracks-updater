@@ -1,0 +1,21 @@
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  test_schedule:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      id: checkout-code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: echo "Install Dependencies"
+    
+    - name: Setup jq
+      uses: dcarbone/install-jq-action@v1.0.1
+    
+    - name: Run Script
+      run: |
+        sh update.sh
