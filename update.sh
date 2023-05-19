@@ -8,7 +8,7 @@ printf " > Fetching top tracks of the month...\n"
 
 map_response=$(curl -sS "https://trackmania.exchange/mapsearch2/search?api=on&mode=$mode&limit=30&priord=8&length=5&lengthop=1")
 if [[ $? -eq 0 ]]; then
-    map_IDs=$(echo "$map_response" | jq -r '.results[] | select(.SizeWarning == false)' | jq -r '.[:25]' | jq -r '.TrackUID')
+    map_IDs=$(echo "$map_response" | jq -r '.results[] | select(.SizeWarning == false) | limit(25;.) | .TrackUID')
 else
     printf "Request failed\n"
 fi
