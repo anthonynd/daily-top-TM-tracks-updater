@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mode=$(wc -l < $1)
-room=$(wc -l < $2)
-room_name=$(wc -l < $3)
+mode=$1
+room=$2
+room_name=$3
 
 printf " > Fetching top tracks of the month...\n"
 
