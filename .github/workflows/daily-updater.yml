@@ -23,4 +23,5 @@ jobs:
         TRACKMANIA_API_USERNAME: ${{ secrets.TRACKMANIA_API_USERNAME }}
         TRACKMANIA_API_PASSWORD: ${{ secrets.TRACKMANIA_API_PASSWORD }}
       run: |
-        ./update.sh
+        ./update.sh 5 387678 'MONTHLY TOP TRACKS'
+        && ./update.sh 4 391695 'WEEKLY TOP TRACKS'

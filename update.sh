@@ -1,10 +1,14 @@
 #!/bin/bash
 
+mode=$(wc -l < $1)
+room=$(wc -l < $2)
+room_name=$(wc -l < $3)
+
 printf " > Fetching top tracks of the month...\n"
 
-map_response=$(curl -sS "https://trackmania.exchange/mapsearch2/search?api=on&mode=5&limit=25&priord=8&length=5&lengthop=1")
+map_response=$(curl -sS "https://trackmania.exchange/mapsearch2/search?api=on&mode=$mode&limit=30&priord=8&length=5&lengthop=1")
 if [[ $? -eq 0 ]]; then
-    map_IDs=$(echo "$map_response" | jq -r '.results[]' | jq -r '.TrackUID')
+    map_IDs=$(echo "$map_response" | jq -r '.results[] | select(.SizeWarning == false)' | jq '.[:25]' | jq -r '.TrackUID')
 else
     printf "Request failed\n"
 fi
@@ -48,7 +52,7 @@ else
 fi
 
 data='{
-    "name":"MONTHLY TOP TRACKS",
+    "name":"'${room_name}'",
     "region":"ca-central",
     "maxPlayersPerServer":100,
     "script":"TrackMania/TM_TimeAttack_Online.Script.txt",
@@ -64,7 +68,7 @@ data='{
 
 printf " > Updating tracks in room...\n"
 
-club_response=$(curl -sS -X POST -H "Authorization: nadeo_v1 t=$token" -d "$data" "https://live-services.trackmania.nadeo.live/api/token/club/61598/room/387678/edit")
+club_response=$(curl -sS -X POST -H "Authorization: nadeo_v1 t=$token" -d "$data" "https://live-services.trackmania.nadeo.live/api/token/club/61598/room/$room/edit")
 if [[ $? -eq 0 ]]; then
     printf "Club response: $club_response\n"
 else
