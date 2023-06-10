@@ -57,7 +57,7 @@ data='{
     "maxPlayersPerServer":100,
     "script":"TrackMania/TM_TimeAttack_Online.Script.txt",
     "settings":[
-        {"key":"S_TimeLimit","value":"420","type":"integer"},
+        {"key":"S_TimeLimit","value":"300","type":"integer"},
         {"key":"S_ForceLapsNb","value":"-1","type":"integer"},
         {"key":"S_DecoImageUrl_WhoAmIUrl","value":"/api/club/61598","type":"text"}
     ],
